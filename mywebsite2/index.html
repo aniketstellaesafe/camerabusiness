@@ -1,0 +1,1813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TechGuard Surveillance | Advanced CCTV & Cybersecurity Solutions</title>
+  <style>
+    :root {
+      --primary: #0a0a1a;
+      --secondary: #131326;
+      --accent: #00d4ff;
+      --accent-alt: #ff6b35;
+      --success: #00ff88;
+      --warning: #ffaa00;
+      --danger: #ff4757;
+      --text: #f0f0f0;
+      --text-muted: #a0a0a0;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background-color: var(--primary);
+      color: var(--text);
+      overflow-x: hidden;
+      padding-top: 80px;
+    }
+
+    /* ANIMATIONS */
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.05); }
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(5deg); }
+    }
+    
+    @keyframes slideInFromLeft {
+      0% { transform: translateX(-100%); opacity: 0; }
+      100% { transform: translateX(0); opacity: 1; }
+    }
+    
+    @keyframes slideInFromRight {
+      0% { transform: translateX(100%); opacity: 0; }
+      100% { transform: translateX(0); opacity: 1; }
+    }
+    
+    @keyframes fadeInUp {
+      0% { transform: translateY(50px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+    
+    @keyframes securityScan {
+      0% { transform: translateY(-100%); opacity: 0; }
+      10%, 90% { opacity: 1; }
+      100% { transform: translateY(100vh); opacity: 0; }
+    }
+    
+    @keyframes digitalRain {
+      0% { transform: translateY(-100vh); }
+      100% { transform: translateY(100vh); }
+    }
+    
+    @keyframes gridMove {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(40px); }
+    }
+    
+    @keyframes countUp {
+      from { transform: scale(0.5); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .hidden {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    
+    .visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* BACKGROUND ANIMATION */
+    .bg-animation {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
+    
+    .security-grid {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(rgba(0, 212, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 212, 255, 0.1) 1px, transparent 1px);
+      background-size: 40px 40px;
+      animation: gridMove 15s linear infinite;
+    }
+    
+    .digital-rain {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+    
+    .rain-drop {
+      position: absolute;
+      color: var(--accent);
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      animation: digitalRain 3s linear infinite;
+      opacity: 0.3;
+    }
+    
+    .floating-elements {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+    
+    .security-icon {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      opacity: 0.1;
+      animation: float 6s ease-in-out infinite;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .security-scan-line {
+      position: fixed;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      animation: securityScan 4s linear infinite;
+      z-index: 10;
+    }
+
+    /* HEADER STYLES */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(10, 10, 26, 0.95);
+      backdrop-filter: blur(15px);
+      border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+      z-index: 9999;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    header.scrolled {
+      background: rgba(10, 10, 26, 0.98);
+      box-shadow: 0 2px 30px rgba(0, 212, 255, 0.1);
+    }
+    
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 5%;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      position: relative;
+      z-index: 10001;
+      transition: all 0.3s ease;
+    }
+    
+    .logo:hover {
+      transform: scale(1.05);
+    }
+    
+    .logo span {
+      color: var(--accent);
+    }
+    
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      margin-right: 12px;
+      position: relative;
+    }
+    
+    .camera-icon {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, var(--accent), var(--accent-alt));
+      border-radius: 8px;
+      position: relative;
+      animation: pulse 3s ease-in-out infinite;
+      box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+    }
+    
+    .camera-icon::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 18px;
+      height: 18px;
+      background: var(--primary);
+      border-radius: 50%;
+      border: 2px solid var(--text);
+    }
+    
+    .camera-icon::after {
+      content: '';
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 6px;
+      height: 6px;
+      background: var(--success);
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+      box-shadow: 0 0 5px var(--success);
+    }
+    
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+      align-items: center;
+    }
+    
+    .nav-links li {
+      position: relative;
+    }
+    
+    .nav-links a {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 500;
+      padding: 0.8rem 1.5rem;
+      border-radius: 25px;
+      transition: all 0.3s ease;
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid transparent;
+    }
+    
+    .nav-links a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, var(--accent), var(--accent-alt));
+      border-radius: 25px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: -1;
+    }
+    
+    .nav-links a:hover::before {
+      opacity: 0.1;
+    }
+    
+    .nav-links a:hover {
+      color: var(--accent);
+      transform: translateY(-2px);
+      border-color: var(--accent);
+      box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
+    }
+    
+    .menu-btn {
+      display: none;
+      background: linear-gradient(45deg, var(--accent), var(--accent-alt));
+      border: none;
+      color: var(--primary);
+      font-size: 1.2rem;
+      cursor: pointer;
+      padding: 0.8rem;
+      border-radius: 10px;
+      width: 50px;
+      height: 50px;
+      position: relative;
+      z-index: 10001;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+    }
+    
+    .menu-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 20px rgba(0, 212, 255, 0.5);
+    }
+    
+    .hamburger {
+      position: relative;
+      width: 20px;
+      height: 20px;
+    }
+    
+    .hamburger span {
+      position: absolute;
+      width: 20px;
+      height: 2px;
+      background: var(--primary);
+      transition: all 0.3s ease;
+      border-radius: 2px;
+    }
+    
+    .hamburger span:nth-child(1) { top: 3px; }
+    .hamburger span:nth-child(2) { top: 9px; }
+    .hamburger span:nth-child(3) { top: 15px; }
+    
+    .menu-btn.active .hamburger span:nth-child(1) {
+      transform: rotate(45deg);
+      top: 9px;
+    }
+    
+    .menu-btn.active .hamburger span:nth-child(2) {
+      opacity: 0;
+    }
+    
+    .menu-btn.active .hamburger span:nth-child(3) {
+      transform: rotate(-45deg);
+      top: 9px;
+    }
+
+    /* BUTTONS */
+    .btn {
+      padding: 1rem 2rem;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 600;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      position: relative;
+      overflow: hidden;
+      font-size: 1rem;
+      text-transform: uppercase;
+    }
+    
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 0;
+      height: 0;
+      background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+      border-radius: 50%;
+      transition: all 0.4s ease;
+      z-index: 0;
+    }
+    
+    .btn:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+    
+    .btn span {
+      position: relative;
+      z-index: 1;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(45deg, var(--accent), var(--accent-alt));
+      color: var(--primary);
+      box-shadow: 0 4px 15px rgba(0, 212, 255, 0.4);
+      font-weight: 700;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0, 212, 255, 0.6);
+    }
+    
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      border: 2px solid var(--accent);
+      font-weight: 600;
+    }
+    
+    .btn-secondary:hover {
+      background: rgba(0, 212, 255, 0.1);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0, 212, 255, 0.3);
+    }
+
+    /* HERO SECTION */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2rem 5% 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero-content {
+      flex: 1;
+      max-width: 600px;
+      z-index: 2;
+    }
+    
+    .hero-dashboard {
+      flex: 1;
+      max-width: 500px;
+      height: 400px;
+      background: rgba(19, 19, 38, 0.8);
+      border-radius: 15px;
+      border: 1px solid rgba(0, 212, 255, 0.3);
+      padding: 2rem;
+      backdrop-filter: blur(10px);
+      animation: float 8s ease-in-out infinite;
+    }
+    
+    .dashboard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+    }
+    
+    .status-indicator {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--success);
+      border-radius: 50%;
+      animation: pulse 1s infinite;
+    }
+    
+    .camera-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .camera-feed {
+      aspect-ratio: 16/9;
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      border-radius: 8px;
+      border: 1px solid var(--accent);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .camera-feed::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.3), transparent);
+      animation: securityScan 3s linear infinite;
+    }
+    
+    .camera-label {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      font-size: 0.7rem;
+      color: var(--success);
+      background: rgba(0, 0, 0, 0.7);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    
+    .security-metrics {
+      display: flex;
+      justify-content: space-between;
+    }
+    
+    .metric {
+      text-align: center;
+    }
+    
+    .metric-value {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--accent);
+    }
+    
+    .metric-label {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+    
+    .hero h1 {
+      font-size: 3.5rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+      animation: slideInFromLeft 1s ease;
+    }
+    
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      color: var(--text-muted);
+      animation: slideInFromLeft 1s ease 0.3s both;
+    }
+    
+    .hero-btns {
+      display: flex;
+      gap: 1rem;
+      animation: slideInFromLeft 1s ease 0.6s both;
+      flex-wrap: wrap;
+    }
+
+    /* SECTIONS */
+    section {
+      padding: 6rem 5%;
+    }
+    
+    .section-title {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      text-align: center;
+      position: relative;
+      display: inline-block;
+      background: linear-gradient(45deg, var(--text), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .section-title::after {
+      content: '';
+      position: absolute;
+      height: 4px;
+      width: 80px;
+      background: linear-gradient(45deg, var(--accent), var(--accent-alt));
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 2px;
+    }
+    
+    .title-container {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    /* THREAT MONITOR */
+    .threat-monitor {
+      background: var(--secondary);
+      position: relative;
+    }
+    
+    .threat-display {
+      max-width: 1200px;
+      margin: 3rem auto 0;
+      background: rgba(10, 10, 26, 0.8);
+      border-radius: 20px;
+      border: 1px solid var(--accent);
+      padding: 3rem;
+      backdrop-filter: blur(10px);
+    }
+    
+    .threat-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+    
+    .threat-stat {
+      text-align: center;
+      padding: 2rem;
+      background: rgba(19, 19, 38, 0.6);
+      border-radius: 15px;
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    .threat-stat:nth-child(2) {
+      animation-delay: -2s;
+    }
+    
+    .threat-stat:nth-child(3) {
+      animation-delay: -4s;
+    }
+    
+    .threat-number {
+      font-size: 3rem;
+      font-weight: bold;
+      color: var(--success);
+      margin-bottom: 1rem;
+      animation: countUp 2s ease-in-out;
+    }
+
+    /* SERVICES */
+    .services {
+      background: var(--primary);
+      position: relative;
+    }
+    
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    
+    .service-card {
+      background: linear-gradient(135deg, rgba(19, 19, 38, 0.8), rgba(10, 10, 26, 0.9));
+      border-radius: 20px;
+      padding: 3rem 2rem;
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+    }
+    
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+      transition: all 0.6s ease;
+    }
+    
+    .service-card:hover::before {
+      left: 100%;
+    }
+    
+    .service-card:hover {
+      transform: translateY(-10px) rotateX(5deg);
+      border-color: var(--accent);
+      box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
+    }
+    
+    .service-icon-wrapper {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 2rem;
+      position: relative;
+      animation: float 4s ease-in-out infinite;
+    }
+    
+    .service-icon {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, var(--accent), var(--accent-alt));
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      position: relative;
+    }
+    
+    .service-icon::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, var(--accent), var(--accent-alt), var(--success));
+      border-radius: 22px;
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .service-card:hover .service-icon::before {
+      opacity: 1;
+    }
+
+    /* LIVE MONITOR */
+    .live-monitor {
+      background: var(--primary);
+      position: relative;
+    }
+    
+    .monitor-display {
+      max-width: 1000px;
+      margin: 3rem auto 0;
+      background: rgba(10, 10, 26, 0.9);
+      border-radius: 20px;
+      border: 2px solid var(--accent);
+      padding: 2rem;
+      position: relative;
+    }
+    
+    .monitor-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0 2rem;
+      border-bottom: 1px solid rgba(0, 212, 255, 0.3);
+    }
+    
+    .live-indicator {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--success);
+      font-weight: bold;
+    }
+    
+    .live-dot {
+      width: 10px;
+      height: 10px;
+      background: var(--success);
+      border-radius: 50%;
+      animation: pulse 1s infinite;
+    }
+    
+    .camera-controls {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    
+    .control-btn {
+      padding: 0.5rem 1rem;
+      background: rgba(0, 212, 255, 0.2);
+      border: 1px solid var(--accent);
+      border-radius: 25px;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .control-btn:hover {
+      background: rgba(0, 212, 255, 0.4);
+      transform: scale(1.05);
+    }
+    
+    .camera-grid-main {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    
+    .main-feed {
+      aspect-ratio: 16/9;
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      border-radius: 15px;
+      border: 1px solid var(--accent);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .main-feed::before {
+      content: 'CAMERA 01 - MAIN ENTRANCE';
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: rgba(0, 0, 0, 0.8);
+      color: var(--success);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      z-index: 2;
+    }
+    
+    .scan-line {
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 2px;
+      background: var(--accent);
+      animation: securityScan 2s linear infinite;
+    }
+    
+    .side-feeds {
+      display: grid;
+      grid-template-rows: repeat(3, 1fr);
+      gap: 1rem;
+    }
+    
+    .side-feed {
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      border-radius: 10px;
+      border: 1px solid rgba(0, 212, 255, 0.5);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .side-feed::before {
+      content: attr(data-camera);
+      position: absolute;
+      bottom: 0.5rem;
+      left: 0.5rem;
+      background: rgba(0, 0, 0, 0.8);
+      color: var(--text);
+      padding: 0.2rem 0.5rem;
+      border-radius: 10px;
+      font-size: 0.6rem;
+      z-index: 2;
+    }
+
+    /* SECURITY FEATURES */
+    .security-features {
+      background: var(--secondary);
+      position: relative;
+    }
+    
+    .features-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 3rem;
+      margin-top: 3rem;
+    }
+    
+    .feature-card {
+      background: rgba(10, 10, 26, 0.6);
+      border-radius: 15px;
+      padding: 2rem;
+      border: 1px solid rgba(0, 212, 255, 0.3);
+      position: relative;
+      backdrop-filter: blur(10px);
+      animation: slideInFromRight 1s ease;
+    }
+    
+    .feature-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .feature-status {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--success);
+      animation: pulse 2s infinite;
+    }
+
+    /* CONTACT */
+    .contact {
+      background: var(--secondary);
+      position: relative;
+    }
+    
+    .contact-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      margin-top: 3rem;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .contact-info {
+      background: rgba(10, 10, 26, 0.6);
+      border-radius: 20px;
+      padding: 3rem;
+      border: 1px solid rgba(0, 212, 255, 0.3);
+      backdrop-filter: blur(10px);
+    }
+    
+    .emergency-alert {
+      background: linear-gradient(45deg, var(--danger), #ff6b35);
+      color: white;
+      padding: 1.5rem;
+      border-radius: 15px;
+      margin-bottom: 2rem;
+      text-align: center;
+      font-weight: bold;
+      animation: pulse 2s infinite;
+    }
+    
+    .info-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 1.5rem;
+    }
+    
+    .info-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: rgba(0, 179, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 1rem;
+      font-size: 1.2rem;
+    }
+    
+    .info-text h4 {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .info-text p, .info-text a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    
+    .info-text a:hover {
+      color: var(--accent);
+    }
+    
+    .contact-form {
+      background: rgba(10, 10, 26, 0.8);
+      border-radius: 20px;
+      padding: 3rem;
+      border: 1px solid var(--accent);
+      backdrop-filter: blur(10px);
+      position: relative;
+    }
+    
+    .form-group {
+      margin-bottom: 2rem;
+      position: relative;
+    }
+    
+    .form-control {
+      width: 100%;
+      padding: 1rem 1.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid rgba(0, 212, 255, 0.3);
+      border-radius: 25px;
+      color: var(--text);
+      transition: all 0.3s ease;
+      font-size: 1rem;
+    }
+    
+    .form-control:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+      transform: scale(1.02);
+    }
+    
+    .form-control::placeholder {
+      color: rgba(160, 160, 160, 0.7);
+    }
+    
+    select.form-control {
+      cursor: pointer;
+    }
+    
+    textarea.form-control {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    /* UTILITY CLASSES */
+    .text-accent { color: var(--accent); }
+    .text-success { color: var(--success); }
+    .text-warning { color: var(--warning); }
+    .text-danger { color: var(--danger); }
+    .text-muted { color: var(--text-muted); }
+
+    /* MOBILE RESPONSIVE */
+    @media (max-width: 1200px) {
+      .hero {
+        flex-direction: column;
+        text-align: center;
+        gap: 3rem;
+      }
+      
+      .camera-grid-main {
+        grid-template-columns: 1fr;
+      }
+      
+      .contact-container {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+    }
+    
+    @media (max-width: 1024px) {
+      .menu-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 350px;
+        max-width: 85vw;
+        height: 100vh;
+        background: linear-gradient(135deg, rgba(10, 10, 26, 0.98), rgba(19, 19, 38, 0.98));
+        backdrop-filter: blur(20px);
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        padding: 100px 2rem 2rem;
+        gap: 1rem;
+        transition: right 0.4s ease;
+        box-shadow: -5px 0 30px rgba(0, 0, 0, 0.5);
+        border-left: 2px solid var(--accent);
+        overflow-y: auto;
+        z-index: 10000;
+      }
+      
+      .nav-links.active {
+        right: 0;
+      }
+      
+      .nav-links li {
+        width: 100%;
+      }
+      
+      .nav-links a {
+        width: 100%;
+        padding: 1rem 1.5rem;
+        font-size: 1.1rem;
+        border-radius: 15px;
+        background: rgba(0, 212, 255, 0.1);
+        border: 1px solid rgba(0, 212, 255, 0.2);
+        margin-bottom: 0.5rem;
+        transition: all 0.3s ease;
+      }
+      
+      .nav-links a:hover {
+        background: rgba(0, 212, 255, 0.2);
+        transform: translateX(10px);
+        box-shadow: 0 5px 20px rgba(0, 212, 255, 0.2);
+      }
+      
+      .nav-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(5px);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        z-index: 9999;
+      }
+      
+      .nav-overlay.active {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      body {
+        padding-top: 70px;
+      }
+      
+      nav {
+        padding: 0.8rem 5%;
+      }
+      
+      .logo {
+        font-size: 1.5rem;
+      }
+      
+      .logo-icon {
+        width: 35px;
+        height: 35px;
+      }
+      
+      .hero {
+        flex-direction: column;
+        text-align: center;
+        gap: 3rem;
+        padding: 2rem 5%;
+      }
+      
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .hero-btns {
+        flex-direction: column;
+        width: 100%;
+        max-width: 300px;
+      }
+      
+      .section-title {
+        font-size: 2.5rem;
+      }
+      
+      .services-grid,
+      .features-container {
+        grid-template-columns: 1fr;
+      }
+      
+      .camera-controls {
+        justify-content: center;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .nav-links {
+        width: 100%;
+        max-width: 100vw;
+        right: -100%;
+      }
+      
+      .hero h1 {
+        font-size: 2rem;
+      }
+      
+      .section-title {
+        font-size: 2rem;
+      }
+      
+      .btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.9rem;
+      }
+      
+      section {
+        padding: 4rem 5%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Enhanced Background Animation -->
+  <div class="bg-animation">
+    <div class="security-grid"></div>
+    <div class="security-scan-line"></div>
+    <div class="digital-rain" id="digitalRain"></div>
+    <div class="floating-elements" id="floatingElements"></div>
+  </div>
+  
+  <!-- HEADER -->
+  <header id="header">
+    <nav>
+      <a href="#" class="logo">
+        <div class="logo-icon">
+          <div class="camera-icon"></div>
+        </div>
+        <span>Tech</span>Guard
+      </a>
+      
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#home">🏠 Home</a></li>
+        <li><a href="#threat-monitor">🛡️ Threat Monitor</a></li>
+        <li><a href="#services">🔧 Services</a></li>
+        <li><a href="#live-monitor">👁️ Live Monitor</a></li>
+        <li><a href="#security-features">⚡ Features</a></li>
+        <li><a href="#contact">📞 Contact</a></li>
+      </ul>
+      
+      <button class="menu-btn" id="menu-btn">
+        <div class="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </button>
+    </nav>
+    
+    <div class="nav-overlay" id="nav-overlay"></div>
+  </header>
+  
+  <!-- HERO SECTION -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <h1>Advanced <span class="text-accent">CCTV</span> & <span class="text-success">Cybersecurity</span> Solutions</h1>
+      <p>🛡️ Real-time threat detection • 📹 24/7 surveillance monitoring • 🔒 Advanced encryption • ⚡ Instant alerts</p>
+      <div class="hero-btns">
+        <a href="#services" class="btn btn-primary">
+          <span>🚀 Secure My Business</span>
+        </a>
+        <a href="#live-monitor" class="btn btn-secondary">
+          <span>👁️ View Live Demo</span>
+        </a>
+      </div>
+    </div>
+    
+    <div class="hero-dashboard">
+      <div class="dashboard-header">
+        <h3>🔒 Security Control Center</h3>
+        <div class="status-indicator">
+          <div class="status-dot"></div>
+          <span>SYSTEM SECURE</span>
+        </div>
+      </div>
+      
+      <div class="camera-grid">
+        <div class="camera-feed">
+          <div class="camera-label">📹 CAM-01 ACTIVE</div>
+          <div class="scan-line"></div>
+        </div>
+        <div class="camera-feed">
+          <div class="camera-label">📹 CAM-02 ACTIVE</div>
+          <div class="scan-line"></div>
+        </div>
+        <div class="camera-feed">
+          <div class="camera-label">📹 CAM-03 ACTIVE</div>
+          <div class="scan-line"></div>
+        </div>
+        <div class="camera-feed">
+          <div class="camera-label">📹 CAM-04 ACTIVE</div>
+          <div class="scan-line"></div>
+        </div>
+      </div>
+      
+      <div class="security-metrics">
+        <div class="metric">
+          <div class="metric-value" id="threatsBlocked">1,247</div>
+          <div class="metric-label">Threats Blocked</div>
+        </div>
+        <div class="metric">
+          <div class="metric-value text-success">99.9%</div>
+          <div class="metric-label">Uptime</div>
+        </div>
+        <div class="metric">
+          <div class="metric-value text-warning" id="activeCameras">24</div>
+          <div class="metric-label">Active Cameras</div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- THREAT MONITOR SECTION -->
+  <section class="threat-monitor" id="threat-monitor">
+    <div class="title-container">
+      <h2 class="section-title hidden">🛡️ Real-Time Threat Monitor</h2>
+      <p class="hidden">Advanced AI-powered threat detection and prevention system</p>
+    </div>
+    
+    <div class="threat-display hidden">
+      <div class="threat-stats">
+        <div class="threat-stat">
+          <div class="threat-number">0</div>
+          <h4>Active Threats</h4>
+          <p class="text-success">All systems secure</p>
+        </div>
+        <div class="threat-stat">
+          <div class="threat-number text-success">847</div>
+          <h4>Threats Neutralized Today</h4>
+          <p class="text-muted">Automatically blocked</p>
+        </div>
+        <div class="threat-stat">
+          <div class="threat-number text-accent">15</div>
+          <h4>Security Cameras Online</h4>
+          <p class="text-muted">Full coverage active</p>
+        </div>
+        <div class="threat-stat">
+          <div class="threat-number text-warning">99.9%</div>
+          <h4>System Reliability</h4>
+          <p class="text-muted">Enterprise grade</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- SERVICES SECTION -->
+  <section class="services" id="services">
+    <div class="title-container">
+      <h2 class="section-title hidden">🔧 Our Security Services</h2>
+      <p class="hidden">Comprehensive protection for your business and property</p>
+    </div>
+    
+    <div class="services-grid">
+      <div class="service-card hidden">
+        <div class="service-icon-wrapper">
+          <div class="service-icon">📹</div>
+        </div>
+        <h3>CCTV Installation & Monitoring</h3>
+        <p>• High-definition 4K cameras<br>• Night vision capabilities<br>• Motion detection alerts<br>• Cloud storage backup<br>• Mobile app access</p>
+      </div>
+      
+      <div class="service-card hidden">
+        <div class="service-icon-wrapper">
+          <div class="service-icon">🛡️</div>
+        </div>
+        <h3>Cybersecurity Protection</h3>
+        <p>• Real-time threat detection<br>• Firewall configuration<br>• Data encryption services<br>• Security audits<br>• Employee training</p>
+      </div>
+      
+      <div class="service-card hidden">
+        <div class="service-icon-wrapper">
+          <div class="service-icon">🚨</div>
+        </div>
+        <h3>Intrusion Detection System</h3>
+        <p>• Perimeter security sensors<br>• Automatic alert system<br>• Police integration<br>• Smart home integration<br>• 24/7 monitoring center</p>
+      </div>
+      
+      <div class="service-card hidden">
+        <div class="service-icon-wrapper">
+          <div class="service-icon">🔐</div>
+        </div>
+        <h3>Access Control Systems</h3>
+        <p>• Biometric scanners<br>• Key card systems<br>• Remote access management<br>• Visitor logging<br>• Multi-level permissions</p>
+      </div>
+      
+      <div class="service-card hidden">
+        <div class="service-icon-wrapper">
+          <div class="service-icon">🤖</div>
+        </div>
+        <h3>AI-Powered Analytics</h3>
+        <p>• Facial recognition technology<br>• Behavior analysis<br>• Crowd detection<br>• Vehicle plate recognition<br>• Predictive security</p>
+      </div>
+      
+      <div class="service-card hidden">
+        <div class="service-icon-wrapper">
+          <div class="service-icon">📱</div>
+        </div>
+        <h3>Mobile Security App</h3>
+        <p>• Live camera feeds<br>• Push notifications<br>• Remote system control<br>• Security reports<br>• Emergency contacts</p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- LIVE MONITOR SECTION -->
+  <section class="live-monitor" id="live-monitor">
+    <div class="title-container">
+      <h2 class="section-title hidden">👁️ Live Security Monitor</h2>
+      <p class="hidden">Experience our real-time surveillance system</p>
+    </div>
+    
+    <div class="monitor-display hidden">
+      <div class="monitor-header">
+        <div class="live-indicator">
+          <div class="live-dot"></div>
+          <span>LIVE</span>
+        </div>
+        <div class="camera-controls">
+          <button class="control-btn">🔄 Rotate</button>
+          <button class="control-btn">🔍 Zoom</button>
+          <button class="control-btn">📹 Record</button>
+          <button class="control-btn">🔊 Audio</button>
+        </div>
+      </div>
+      
+      <div class="camera-grid-main">
+        <div class="main-feed">
+          <div class="scan-line"></div>
+        </div>
+        <div class="side-feeds">
+          <div class="side-feed" data-camera="CAM-02 PARKING">
+            <div class="scan-line"></div>
+          </div>
+          <div class="side-feed" data-camera="CAM-03 OFFICE">
+            <div class="scan-line"></div>
+          </div>
+          <div class="side-feed" data-camera="CAM-04 WAREHOUSE">
+            <div class="scan-line"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- SECURITY FEATURES SECTION -->
+  <section class="security-features" id="security-features">
+    <div class="title-container">
+      <h2 class="section-title hidden">⚡ Advanced Security Features</h2>
+      <p class="hidden">Cutting-edge technology protecting your assets</p>
+    </div>
+    
+    <div class="features-container">
+      <div class="feature-card hidden">
+        <div class="feature-header">
+          <div class="feature-status"></div>
+          <h3>🔒 Encrypted Data Storage</h3>
+        </div>
+        <p>Military-grade AES-256 encryption ensures your surveillance data remains secure and protected from unauthorized access.</p>
+      </div>
+      
+      <div class="feature-card hidden">
+        <div class="feature-header">
+          <div class="feature-status"></div>
+          <h3>🤖 AI Motion Detection</h3>
+        </div>
+        <p>Smart algorithms distinguish between normal activity and potential threats, reducing false alarms by 95%.</p>
+      </div>
+      
+      <div class="feature-card hidden">
+        <div class="feature-header">
+          <div class="feature-status"></div>
+          <h3>☁️ Cloud Backup System</h3>
+        </div>
+        <p>Automatic cloud storage with 99.9% uptime guarantee. Your footage is safe even if local systems fail.</p>
+      </div>
+      
+      <div class="feature-card hidden">
+        <div class="feature-header">
+          <div class="feature-status"></div>
+          <h3>📱 Real-time Alerts</h3>
+        </div>
+        <p>Instant notifications via SMS, email, and mobile app when suspicious activity is detected on your property.</p>
+      </div>
+      
+      <div class="feature-card hidden">
+        <div class="feature-header">
+          <div class="feature-status"></div>
+          <h3>🌙 Night Vision Pro</h3>
+        </div>
+        <p>Advanced infrared technology provides crystal-clear footage even in complete darkness up to 100 feet.</p>
+      </div>
+      
+      <div class="feature-card hidden">
+        <div class="feature-header">
+          <div class="feature-status"></div>
+          <h3>🔍 Facial Recognition</h3>
+        </div>
+        <p>Identify known individuals, track unauthorized personnel, and maintain visitor logs automatically.</p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- CONTACT SECTION -->
+  <section class="contact" id="contact">
+    <div class="title-container">
+      <h2 class="section-title hidden">📞 Get Secure Today</h2>
+      <p class="hidden">24/7 emergency response • Free security consultation • Rapid deployment</p>
+    </div>
+    
+    <div class="contact-container">
+      <div class="contact-info hidden">
+        <div class="emergency-alert">
+          🚨 EMERGENCY SECURITY HOTLINE<br>
+          📞 1-800-SECURE-NOW
+        </div>
+        
+        <h3>🛡️ Security Operations Center</h3>
+        
+        <div class="info-item">
+          <div class="info-icon">📍</div>
+          <div class="info-text">
+            <h4>Command Center Location</h4>
+            <p>1247 Cybersecurity Boulevard<br>Tech Security District, TX 75001</p>
+          </div>
+        </div>
+        
+        <div class="info-item">
+          <div class="info-icon">📧</div>
+          <div class="info-text">
+            <h4>Security Email</h4>
+            <a href="mailto:security@techguard.com">security@techguard.com</a><br>
+            <a href="mailto:emergency@techguard.com">emergency@techguard.com</a>
+          </div>
+        </div>
+        
+        <div class="info-item">
+          <div class="info-icon">📞</div>
+          <div class="info-text">
+            <h4>24/7 Monitoring Center</h4>
+            <p>🔒 Main Line: +1 (555) 123-SAFE<br>
+            🚨 Emergency: +1 (555) 911-HELP<br>
+            💼 Business: +1 (555) 247-TECH</p>
+          </div>
+        </div>
+        
+        <div class="info-item">
+          <div class="info-icon">⏰</div>
+          <div class="info-text">
+            <h4>Response Times</h4>
+            <p>🚨 Emergency: &lt; 5 minutes<br>
+            📞 Support Calls: &lt; 30 seconds<br>
+            🔧 On-site Service: &lt; 2 hours</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="contact-form hidden">
+        <h3>🔒 Request Security Assessment</h3>
+        <form action="#" method="POST">
+          <div class="form-group">
+            <input type="text" name="name" class="form-control" placeholder="Your Full Name *" required>
+          </div>
+          <div class="form-group">
+            <input type="email" name="email" class="form-control" placeholder="Business Email *" required>
+          </div>
+          <div class="form-group">
+            <input type="tel" name="phone" class="form-control" placeholder="Phone Number *" required>
+          </div>
+          <div class="form-group">
+            <select name="service" class="form-control" required>
+              <option value="">Select Security Service *</option>
+              <option value="cctv">CCTV Installation</option>
+              <option value="cybersecurity">Cybersecurity Protection</option>
+              <option value="access-control">Access Control System</option>
+              <option value="intrusion">Intrusion Detection</option>
+              <option value="monitoring">24/7 Monitoring</option>
+              <option value="emergency">🚨 Emergency Service</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <textarea name="message" class="form-control" placeholder="Describe your security requirements..." rows="4" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">
+            <span>🚀 Get Free Security Quote</span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+  
+  <!-- FOOTER -->
+  <footer style="background: var(--primary); padding: 4rem 5% 2rem; text-align: center; border-top: 1px solid rgba(0, 212, 255, 0.2);">
+    <div style="max-width: 1200px; margin: 0 auto;">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem; margin-bottom: 3rem;">
+        <div>
+          <h3 style="color: var(--accent); margin-bottom: 1rem;">🛡️ TechGuard Security</h3>
+          <p>Advanced CCTV & Cybersecurity Solutions</p>
+          <p style="color: var(--success); font-weight: bold;">🔒 Your Security is Our Priority</p>
+        </div>
+        <div>
+          <p style="color: var(--accent); font-weight: bold; margin-bottom: 1rem;">🚨 EMERGENCY HOTLINE</p>
+          <p style="font-size: 1.5rem; color: var(--danger);">📞 1-800-SECURE-NOW</p>
+        </div>
+      </div>
+      
+      <div style="border-top: 1px solid rgba(0, 212, 255, 0.1); padding-top: 2rem;">
+        <p>&copy; 2025 TechGuard Surveillance Systems. All Rights Reserved.</p>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">🔒 Licensed Security Provider | 🛡️ Certified Cybersecurity Experts | 📹 Professional CCTV Installation</p>
+      </div>
+    </div>
+  </footer>
+  
+  <script>
+    // ENHANCED NAVIGATION JAVASCRIPT
+    const menuBtn = document.getElementById('menu-btn');
+    const navLinks = document.getElementById('nav-links');
+    const navOverlay = document.getElementById('nav-overlay');
+    const header = document.getElementById('header');
+    
+    // Mobile menu toggle
+    menuBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleMenu();
+    });
+    
+    // Overlay click to close menu
+    navOverlay.addEventListener('click', () => {
+      closeMenu();
+    });
+    
+    // Close menu when clicking nav links
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        closeMenu();
+      });
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!navLinks.contains(e.target) && !menuBtn.contains(e.target)) {
+        closeMenu();
+      }
+    });
+    
+    function toggleMenu() {
+      const isActive = navLinks.classList.contains('active');
+      if (isActive) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    }
+    
+    function openMenu() {
+      navLinks.classList.add('active');
+      navOverlay.classList.add('active');
+      menuBtn.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    
+    function closeMenu() {
+      navLinks.classList.remove('active');
+      navOverlay.classList.remove('active');
+      menuBtn.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    
+    // Header scroll effect
+    let lastScrollY = window.scrollY;
+    
+    window.addEventListener('scroll', () => {
+      const currentScrollY = window.scrollY;
+      
+      if (currentScrollY > 100) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+      
+      lastScrollY = currentScrollY;
+    });
+    
+    // Smooth scrolling for navigation
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          const headerHeight = header.offsetHeight;
+          const targetPosition = target.offsetTop - headerHeight - 20;
+          
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+    
+    // Prevent menu closing when clicking inside nav-links
+    navLinks.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+    
+    // Handle window resize
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 1024) {
+        closeMenu();
+      }
+    });
+
+    // ENHANCED ANIMATIONS AND EFFECTS
+    
+    // Digital Rain Effect
+    function createDigitalRain() {
+      const rain = document.getElementById('digitalRain');
+      const chars = '01010110011010010110111001100101';
+      
+      for (let i = 0; i < 50; i++) {
+        const drop = document.createElement('div');
+        drop.className = 'rain-drop';
+        drop.textContent = chars[Math.floor(Math.random() * chars.length)];
+        drop.style.left = Math.random() * 100 + '%';
+        drop.style.animationDelay = Math.random() * 3 + 's';
+        drop.style.animationDuration = (Math.random() * 3 + 2) + 's';
+        rain.appendChild(drop);
+      }
+    }
+    
+    // Floating Security Elements
+    function createFloatingElements() {
+      const container = document.getElementById('floatingElements');
+      const icons = ['🔒', '🛡️', '📹', '🔐', '🚨', '👁️', '🤖', '⚡'];
+      
+      for (let i = 0; i < 15; i++) {
+        const element = document.createElement('div');
+        element.className = 'security-icon';
+        element.textContent = icons[Math.floor(Math.random() * icons.length)];
+        element.style.left = Math.random() * 100 + '%';
+        element.style.top = Math.random() * 100 + '%';
+        element.style.animationDelay = Math.random() * 6 + 's';
+        element.style.animationDuration = (Math.random() * 4 + 6) + 's';
+        container.appendChild(element);
+      }
+    }
+    
+    // Animated Counters
+    function animateCounter(element, target) {
+      let current = 0;
+      const increment = target / 100;
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+          current = target;
+          clearInterval(timer);
+        }
+        element.textContent = Math.floor(current).toLocaleString();
+      }, 20);
+    }
+    
+    // Enhanced scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          
+          // Animate threat counters when visible
+          if (entry.target.classList.contains('threat-stat')) {
+            const number = entry.target.querySelector('.threat-number');
+            const target = parseInt(number.textContent.replace(/\D/g, ''));
+            if (target && !isNaN(target)) {
+              animateCounter(number, target);
+            }
+          }
+        }
+      });
+    }, { threshold: 0.1 });
+    
+    document.querySelectorAll('.hidden').forEach(el => observer.observe(el));
+    
+    // Real-time counter updates
+    function updateCounters() {
+      const threatsBlocked = document.getElementById('threatsBlocked');
+      const activeCameras = document.getElementById('activeCameras');
+      
+      if (threatsBlocked) {
+        let current = parseInt(threatsBlocked.textContent.replace(/,/g, ''));
+        if (Math.random() > 0.7) { // 30% chance to increment
+          current++;
+          threatsBlocked.textContent = current.toLocaleString();
+        }
+      }
+    }
+    
+    // Simulate live updates every 3 seconds
+    setInterval(updateCounters, 3000);
+    
+    // Form submission with security validation
+    const contactForm = document.querySelector('.contact-form form');
+    if (contactForm) {
+      contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        // Show security processing animation
+        const submitBtn = contactForm.querySelector('.btn-primary');
+        const originalText = submitBtn.innerHTML;
+        
+        submitBtn.innerHTML = '<span>🔒 Processing Secure Request...</span>';
+        submitBtn.disabled = true;
+        
+        setTimeout(() => {
+          submitBtn.innerHTML = '<span>✅ Security Assessment Scheduled!</span>';
+          setTimeout(() => {
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+            contactForm.reset();
+          }, 2000);
+        }, 2000);
+      });
+    }
+    
+    // Initialize effects
+    document.addEventListener('DOMContentLoaded', () => {
+      createDigitalRain();
+      createFloatingElements();
+      
+      // Add random security alerts
+      setInterval(() => {
+        if (Math.random() > 0.8) {
+          const alerts = [
+            '🛡️ Perimeter secure',
+            '📹 All cameras operational', 
+            '🔒 System integrity verified',
+            '⚡ Threat scan complete'
+          ];
+          console.log(alerts[Math.floor(Math.random() * alerts.length)]);
+        }
+      }, 5000);
+    });
+
+    // Control button interactions
+    document.querySelectorAll('.control-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        btn.style.background = 'rgba(0, 212, 255, 0.6)';
+        setTimeout(() => {
+          btn.style.background = 'rgba(0, 212, 255, 0.2)';
+        }, 200);
+      });
+    });
+  </script>
+</body>
+</html>
